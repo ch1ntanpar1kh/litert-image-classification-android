@@ -37,6 +37,7 @@ class MainViewModel(private val imageClassificationHelper: ImageClassificationHe
     ViewModel() {
     companion object {
         fun getFactory(context: Context) = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val imageClassificationHelper = ImageClassificationHelper(context)
                 return MainViewModel(imageClassificationHelper) as T
@@ -55,7 +56,7 @@ class MainViewModel(private val imageClassificationHelper: ImageClassificationHe
                             model = it.model,
                             delegate = it.delegate,
                             resultCount = it.resultCount,
-                            probabilityThreshold = it.threshold
+                            probabilityThreshold = it.threshold,
                         )
                     )
                     imageClassificationHelper.initClassifier()
@@ -150,5 +151,12 @@ class MainViewModel(private val imageClassificationHelper: ImageClassificationHe
     /** Clear error message after it has been consumed*/
     fun errorMessageShown() {
         errorMessage.update { null }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.launch {
+            imageClassificationHelper.close()
+        }
     }
 }

@@ -103,23 +103,29 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(uiState.errorMessage) {
                 if (uiState.errorMessage != null) {
                     Toast.makeText(
-                        this@MainActivity, "${uiState.errorMessage}", Toast.LENGTH_SHORT
+                        this@MainActivity, uiState.errorMessage, Toast.LENGTH_SHORT
                     ).show()
                     viewModel.errorMessageShown()
                 }
             }
             ApplicationTheme {
-                BottomSheetScaffold(sheetPeekHeight = (90 + 20 * uiState.categories.size).dp,
+                BottomSheetScaffold(sheetPeekHeight = (90 + (20 * uiState.categories.size)).dp,
                     sheetContent = {
-                        BottomSheet(uiState = uiState, onModelSelected = {
-                            viewModel.setModel(it)
-                        }, onDelegateSelected = {
-                            viewModel.setDelegate(it)
-                        }, onThresholdSet = {
-                            viewModel.setThreshold(it)
-                        }, onMaxResultSet = {
-                            viewModel.setNumberOfResult(it)
-                        })
+                        BottomSheet(
+                            uiState = uiState,
+                            onModelSelected = {
+                                viewModel.setModel(it)
+                            },
+                            onDelegateSelected = {
+                                viewModel.setDelegate(it)
+                            },
+                            onThresholdSet = {
+                                viewModel.setThreshold(it)
+                            },
+                            onMaxResultSet = {
+                                viewModel.setNumberOfResult(it)
+                            }
+                        )
                     },
                     floatingActionButton = {
                         if (tabState == Tab.Gallery) {

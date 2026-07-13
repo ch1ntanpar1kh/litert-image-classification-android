@@ -32,5 +32,5 @@ data class Setting(
     val delegate: ImageClassificationHelper.Delegate = ImageClassificationHelper.DEFAULT_DELEGATE,
     val resultCount: Int = ImageClassificationHelper.DEFAULT_RESULT_COUNT,
     val threshold: Float = ImageClassificationHelper.DEFAULT_THRESHOLD,
-    val threadCount: Int = ImageClassificationHelper.DEFAULT_THREAD_COUNT
+    val threadCount: Int = ImageClassificationHelper.DEFAULT_THREAD_COUNT,
 )

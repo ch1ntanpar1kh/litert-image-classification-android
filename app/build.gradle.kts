@@ -7,18 +7,18 @@ plugins {
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
 android {
     namespace = "com.google.aiedge.examples.imageclassification"
-    compileSdk = 30
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.google.aiedge.examples.imageclassification"
         minSdk = 24
-        targetSdk = 30
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -33,13 +33,13 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -51,13 +51,13 @@ android {
     }
     sourceSets {
         getByName("main") {
-            jniLibs.srcDirs("src/main/jniLibs")
+            jniLibs.directories.add("src/main/jniLibs")
         }
     }
 }
 
 // Import DownloadModels task
-project.ext.set("ASSET_DIR", "$projectDir/src/main/assets")
+extra["ASSET_DIR"] = "$projectDir/src/main/assets"
 apply(from = "download_model.gradle")
 
 configurations.all {
